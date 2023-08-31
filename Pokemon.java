@@ -97,10 +97,19 @@ class Pokemon {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try{this.setReleaseDate(format.parse(cells[6]));}catch(Exception e){}
         //Criar função formatarArray
-        // ArrayList<String> types = cells[7].split(",");
         
+        this.setTypes(formatArray(cells[7]));
+        this.setAbilities(formatArray(cells[8]));
     }
-    public ArrayList formatArray(String arrayField){
-        String arrayClean = arrayField.replaceAll("\"" , "");
+    public ArrayList<String> formatArray(String arrayField){
+        String[] array = (arrayField.replaceAll("\"" , "")).split(",");
+        ArrayList<String> arrayList = new ArrayList<String>();
+        try{
+            arrayList.add(array[0]);
+            if(array[1] != " "){
+                arrayList.add(array[1]);
+            }
+        }catch(Exception e){System.out.println(e);}
+        return arrayList;
     }
 }
