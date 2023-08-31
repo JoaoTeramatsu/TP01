@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -41,7 +42,7 @@ class Pokemon {
         this.abilities = abilities;
     }
 
-    public void releaseDate(Date releaseDate) {
+    public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 
@@ -70,6 +71,10 @@ class Pokemon {
         return this.pokedexNum;
     }
 
+    public ArrayList<String> getTypes(){return this.types;}
+    public ArrayList<String> getAbilities(){return this.abilities;}
+    public Date getReleaseDate(){return this.releaseDate;}
+
     // Empty Constructor
     public Pokemon() {
         this.name = this.generation = this.specie = hiddenAbility = null;
@@ -79,6 +84,23 @@ class Pokemon {
     }
 
     // Create a parseCSV or parseLine
-
     // Important REGEX: ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)"
+    // CSV: [id, pokedexId, name, generation, specie, abilityHidden, releaseDate, types, abilities]
+    public void parseCSV(String csvLine){
+        String[] cells = csvLine.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+        this.setIndex(Integer.parseInt(cells[0]));
+        this.setPokedexNum(Integer.parseInt(cells[1]));
+        this.setName(cells[2]);
+        this.setGeneration(cells[3]);
+        this.setSpecie(cells[4]);
+        this.setHiddenAbility(cells[5]);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try{this.setReleaseDate(format.parse(cells[6]));}catch(Exception e){}
+        //Criar função formatarArray
+        // ArrayList<String> types = cells[7].split(",");
+        
+    }
+    public ArrayList formatArray(String arrayField){
+        String arrayClean = arrayField.replaceAll("\"" , "");
+    }
 }
