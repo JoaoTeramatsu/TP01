@@ -125,7 +125,20 @@ class Pokemon {
         return arrayList;
     }
 
-    // public String toString(){
-    //     return "Nome: "
-    // }
+    public String arrayToString(ArrayList<String> array){
+        String str = array.size() == 2 ? array.get(0) +", " + array.get(1) :
+        array.get(0);
+        return str;
+    }
+
+    public String toString(){
+        return "\nIndex: " + getIndex() + 
+        "\nPokedex Number: " + getPokedexNum() +
+        "\nGeneration: " + getGeneration() + 
+        "\nNome: " + getName() + 
+        "\nSpecie: " + getSpecie() + 
+        "\nTypes: " + this.arrayToString(getTypes()) +
+        "\nAbilities: " + this.arrayToString(getAbilities()) + 
+        "\nHidden Ability: " + getHiddenAbility();
+    }
 }
