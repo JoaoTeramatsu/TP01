@@ -1,7 +1,8 @@
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Scanner;
 
 class Pokemon {
     private String name, generation, specie, hiddenAbility;
@@ -71,9 +72,17 @@ class Pokemon {
         return this.pokedexNum;
     }
 
-    public ArrayList<String> getTypes(){return this.types;}
-    public ArrayList<String> getAbilities(){return this.abilities;}
-    public Date getReleaseDate(){return this.releaseDate;}
+    public ArrayList<String> getTypes() {
+        return this.types;
+    }
+
+    public ArrayList<String> getAbilities() {
+        return this.abilities;
+    }
+
+    public Date getReleaseDate() {
+        return this.releaseDate;
+    }
 
     // Empty Constructor
     public Pokemon() {
@@ -82,11 +91,9 @@ class Pokemon {
         this.types = abilities = new ArrayList<String>();
         this.releaseDate = null;
     }
-
-    // Create a parseCSV or parseLine
-    // Important REGEX: ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)"
-    // CSV: [id, pokedexId, name, generation, specie, abilityHidden, releaseDate, types, abilities]
-    public void parseCSV(String csvLine){
+    // CSV: [id, pokedexId, name, generation, specie, abilityHidden, releaseDate,
+    // types, abilities]
+    public void parseCSV(String csvLine) {
         String[] cells = csvLine.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
         this.setIndex(Integer.parseInt(cells[0]));
         this.setPokedexNum(Integer.parseInt(cells[1]));
@@ -95,21 +102,30 @@ class Pokemon {
         this.setSpecie(cells[4]);
         this.setHiddenAbility(cells[5]);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        try{this.setReleaseDate(format.parse(cells[6]));}catch(Exception e){}
-        //Criar função formatarArray
-        
+        try {
+            this.setReleaseDate(format.parse(cells[6]));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         this.setTypes(formatArray(cells[7]));
         this.setAbilities(formatArray(cells[8]));
     }
-    public ArrayList<String> formatArray(String arrayField){
-        String[] array = (arrayField.replaceAll("\"" , "")).split(",");
+
+    public ArrayList<String> formatArray(String arrayField) {
+        String[] array = (arrayField.replaceAll("\"", "")).split(",");
         ArrayList<String> arrayList = new ArrayList<String>();
-        try{
+        try {
             arrayList.add(array[0]);
-            if(array[1] != " "){
+            if (array[1] != " ") {
                 arrayList.add(array[1]);
             }
-        }catch(Exception e){System.out.println(e);}
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         return arrayList;
     }
+
+    // public String toString(){
+    //     return "Nome: "
+    // }
 }
