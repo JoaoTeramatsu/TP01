@@ -1,5 +1,7 @@
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,8 +82,8 @@ class Pokemon {
         return this.abilities;
     }
 
-    public Date getReleaseDate() {
-        return this.releaseDate;
+    public long getReleaseDate() {
+        return this.releaseDate.getTime();
     }
 
     // Empty Constructor
@@ -91,6 +93,7 @@ class Pokemon {
         this.types = abilities = new ArrayList<String>();
         this.releaseDate = null;
     }
+
     // CSV: [id, pokedexId, name, generation, specie, abilityHidden, releaseDate,
     // types, abilities]
     public void parseCSV(String csvLine) {
@@ -125,20 +128,48 @@ class Pokemon {
         return arrayList;
     }
 
-    public String arrayToString(ArrayList<String> array){
-        String str = array.size() == 2 ? array.get(0) +", " + array.get(1) :
-        array.get(0);
+    public String arrayToString(ArrayList<String> array) {
+        String str = array.size() == 2 ? array.get(0) + ", " + array.get(1) : array.get(0);
         return str;
     }
 
-    public String toString(){
-        return "\nIndex: " + getIndex() + 
-        "\nPokedex Number: " + getPokedexNum() +
-        "\nGeneration: " + getGeneration() + 
-        "\nNome: " + getName() + 
-        "\nSpecie: " + getSpecie() + 
-        "\nTypes: " + this.arrayToString(getTypes()) +
-        "\nAbilities: " + this.arrayToString(getAbilities()) + 
-        "\nHidden Ability: " + getHiddenAbility();
+    public byte[] toByteArray() throws IOException {
+        ByteArrayOutputStream bs = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(bs);
+
+        // Converter dados da Classe Pokemon para um array de Bytes
+
+        dos.writeInt(getIndex());
+        dos.writeInt(getPokedexNum());
+        dos.writeInt(getName().getBytes(Charset.forName("UTF-8")).length);
+        dos.writeUTF(getName());
+        dos.writeInt(getGeneration().getBytes(Charset.forName("UTF-8")).length);
+        dos.writeUTF(getGeneration());
+        dos.writeInt(getSpecie().getBytes(Charset.forName("UTF-8")).length);
+        dos.writeUTF(getSpecie());
+        dos.writeInt(getHiddenAbility().getBytes(Charset.forName("UTF-8")).length);
+        dos.writeUTF(getHiddenAbility());
+        dos.writeLong(getReleaseDate());
+        for (String type : getTypes()) {
+            dos.writeInt(type.getBytes(Charset.forName("UTF-8")).length);
+            dos.writeUTF(type);
+        }
+        for (String abilities : getAbilities()) {
+            dos.writeInt(abilities.getBytes(Charset.forName("UTF-8")).length);
+            dos.writeUTF(abilities);
+        }
+
+        return bs.toByteArray();
+    }
+
+    public String toString() {
+        return "\nIndex: " + getIndex() +
+                "\nPokedex Number: " + getPokedexNum() +
+                "\nGeneration: " + getGeneration() +
+                "\nNome: " + getName() +
+                "\nSpecie: " + getSpecie() +
+                "\nTypes: " + this.arrayToString(getTypes()) +
+                "\nAbilities: " + this.arrayToString(getAbilities()) +
+                "\nHidden Ability: " + getHiddenAbility();
     }
 }
