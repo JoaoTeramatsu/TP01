@@ -115,11 +115,14 @@ class Pokemon {
     }
 
     public ArrayList<String> formatArray(String arrayField) {
-        String[] array = (arrayField.replaceAll("\"", "")).split(",");
+        
+        String[] array = (arrayField.replaceAll("\"", "")).split(", ");
         ArrayList<String> arrayList = new ArrayList<String>();
         try {
             arrayList.add(array[0]);
-            if (array[1] != " ") {
+            System.out.println("array[0]" + array[0]);
+            if (array.length > 1) {
+                System.out.println("array[1]" + array[1]);
                 arrayList.add(array[1]);
             }
         } catch (Exception e) {
