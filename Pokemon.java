@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 class Pokemon {
+    //Entender melhor esse atributo
+    public boolean lapide;
     private String name, generation, specie, hiddenAbility;
     private int index, pokedexNum;
     private ArrayList<String> types, abilities;
@@ -88,6 +90,7 @@ class Pokemon {
 
     // Empty Constructor
     public Pokemon() {
+        this.lapide = true;
         this.name = this.generation = this.specie = hiddenAbility = null;
         this.index = this.pokedexNum = -1;
         this.types = abilities = new ArrayList<String>();
@@ -98,6 +101,7 @@ class Pokemon {
     // types, abilities]
     public void parseCSV(String csvLine) {
         String[] cells = csvLine.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+        this.lapide = true; 
         this.setIndex(Integer.parseInt(cells[0]));
         this.setPokedexNum(Integer.parseInt(cells[1]));
         this.setName(cells[2]);
