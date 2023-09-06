@@ -1,4 +1,7 @@
 import java.io.RandomAccessFile;
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.io.IOException;
 
 public class CRUD {
@@ -22,8 +25,9 @@ public class CRUD {
    public void create(Pokemon pokemon) throws IOException {
       create(this.file, pokemon);
    }
-   //Fazer Método READ
-   public void read(int pokemonIndex) throws IOException{
+
+   // Fazer Método READ
+   public Pokemon read(int pokemonIndex) throws IOException{
       long pos;
       int bytes, id;
       boolean isAlive;
@@ -39,7 +43,7 @@ public class CRUD {
             isAlive = file.readBoolean();
             if(file.readInt() == pokemonIndex && isAlive){
                try{
-                  //convertTo
+                  pokemon = binToPokemon(file, pos);
                   break;
                }catch(Exception e){e.printStackTrace();}
             }else{
@@ -48,10 +52,41 @@ public class CRUD {
             }
          }
       }catch(IOException e){e.printStackTrace();}
+      return pokemon;
    }
-   
-   public Pokemon binToPokemon(RandomAccessFile file, long pos){
+
+   public Pokemon binToPokemon(RandomAccessFile file, long pos) throws IOException {
       Pokemon pokemon = new Pokemon();
+
+      ArrayList<String> typeArrList = new ArrayList<String>();
+      ArrayList<String> abilitiesArrList = new ArrayList<String>();
+
+      file.seek(pos);
+      file.readInt(); // pula id do registro
+      pokemon.lapide = file.readBoolean();
+      pokemon.setIndex(file.readInt());
+      pokemon.setPokedexNum(file.readInt());
+      file.readInt(); // pula tam. do nome
+      pokemon.setName(file.readUTF());
+      file.readInt(); // pula tam. da geração
+      pokemon.setGeneration(file.readUTF());
+      file.readInt(); // pula tam. da especie
+      pokemon.setSpecie(file.readUTF());
+      file.readInt(); // pula tam. da hidden ability
+      pokemon.setHiddenAbility(file.readUTF());
+      pokemon.setReleaseDate(file.readLong());
+
+      for (int i = 0; i < file.readInt(); i++) {
+         file.readInt(); // pula tam. de cada tipo
+         typeArrList.add(file.readUTF());
+      }
+      pokemon.setTypes(typeArrList);
+      for (int i = 0; i < file.readInt(); i++) {
+         file.readInt(); // pula tam. de cada habilidade
+         abilitiesArrList.add(file.readUTF());
+      }
+      pokemon.setTypes(abilitiesArrList);
+
       return pokemon;
    }
 }
