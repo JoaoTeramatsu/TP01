@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 class Pokemon {
     //Entender melhor esse atributo
@@ -49,6 +50,10 @@ class Pokemon {
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
+    }
+    public void setReleaseDate(long longDate){
+        Date date = new Date(longDate);
+        this.releaseDate = date;
     }
 
     // Getters
@@ -157,10 +162,12 @@ class Pokemon {
         dos.writeInt(getHiddenAbility().getBytes(Charset.forName("UTF-8")).length);
         dos.writeUTF(getHiddenAbility());
         dos.writeLong(getReleaseDate());
+        dos.writeInt(getTypes().size());
         for (String type : getTypes()) {
             dos.writeInt(type.getBytes(Charset.forName("UTF-8")).length);
             dos.writeUTF(type);
         }
+        dos.writeInt(getAbilities().size());
         for (String abilities : getAbilities()) {
             dos.writeInt(abilities.getBytes(Charset.forName("UTF-8")).length);
             dos.writeUTF(abilities);
