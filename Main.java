@@ -11,7 +11,7 @@ public class Main {
    public static void main(String args[]) throws IOException {
       Scanner fetch = new Scanner(System.in);
       CRUD crud = new CRUD("pokemonDB");
-      String basefile = "pokemonSample.csv";
+      String basefile = "pokemon.csv";
       // ArvoreB arv = new ArvoreB(8);
       // HashExtensivel hash= new HashExtensivel(1);
 
@@ -145,8 +145,8 @@ public class Main {
                try {
                   System.out.println("Digite o ID: ");
                   int readID = fetch.nextInt();
-                  crud.read(readID).getIndex(); // Teste para ver se game existe (teste de pointer)
-                  if (crud.read(readID).lapide) {
+                  crud.Read(readID).getIndex(); // Teste para ver se pokemon existe (teste de pointer)
+                  if (crud.Read(readID).lapide) {
                      System.out.println("\nArquivo encontrado!\n");
                      System.out.print(
                            "ID: " + crud.read(readID).getIndex() + ", Pokedex ID: " + crud.read(readID).getPokedexNum()

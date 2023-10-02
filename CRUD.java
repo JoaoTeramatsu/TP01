@@ -58,7 +58,6 @@ public class CRUD {
    public void create(RandomAccessFile file, Pokemon pokemon) throws IOException {
       file.seek(0);
       file.writeInt(pokemon.getIndex());
-      System.out.println(file.length());
       file.seek(file.length());
 
       byte[] byteArr = pokemon.toByteArray();
@@ -69,25 +68,6 @@ public class CRUD {
    public void create(Pokemon pokemon) throws IOException {
       create(this.file, pokemon);
    }
-   // public void Create(int readID, String novoArtistName,String novaData,String
-   // novoReleaseType,int novoReviewsCount,String[] novoGenero, String releaseName)
-   // throws IOException, ParseException{
-   // ArrayList<String> arrayUpdate = new ArrayList<String>();
-   // for(int i=0;i<novoGenero.length;i++){
-   // arrayUpdate.add(novoGenero[i]);
-   // }
-   // SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-   // Date data = df.parse(novaData);
-   // boolean lap=true;
-   // Musica musTemp = new Musica(readID, novoArtistName, data, novoReleaseType,
-   // novoReviewsCount, arrayUpdate, lap, releaseName);
-   // file.seek(0);
-   // file.writeInt(musTemp.getId());
-   // file.seek(file.length());
-   // byte[] byteArray = musTemp.toByteArray();
-   // file.writeInt(musTemp.toByteArray().length);
-   // file.write(byteArray);
-   // }
 
    // Fazer Método READ
    public Pokemon read(int pokemonIndex) throws IOException {
@@ -120,6 +100,46 @@ public class CRUD {
          e.printStackTrace();
       }
       return pokemon;
+   }
+
+   public Pokemon Read(int pokemonIndex) throws IOException {
+      long pos;
+      int qntBytesInic, id;
+      Pokemon musLida = null;
+      boolean lap;
+
+      file.seek(0);
+      file.readInt();// pula o ID do registro, pois o mesmo ID será lido mais para frente
+      try {
+         while (file.getFilePointer() < file.length()) {
+            pos = file.getFilePointer(); // Pega a posição do ponteiro no momento atual(está apontando para a quantidade
+                                         // de bytes no registo).
+            qntBytesInic = file.readInt(); // Pega o tamanho do registo que será selecionado
+            lap = file.readBoolean(); // Armazena o valor da lápide do registro Game específico
+            id = file.readInt(); // Armazena o ID do registro Game específico
+            if (id == pokemonIndex) { // Verifica se o id é o mesmo que o selecionado
+               if (lap) { // Verifica se a lápide é válida, ou seja, se o registro foi apagado ou não
+                  try {
+                     musLida = binToPokemon(file, pos); // Gera uma instância de Game e popula com as informações do
+                                                        // banco
+                     // de dados
+                     break;
+                  } catch (Exception e) {
+                     e.printStackTrace();
+                  }
+               } else {
+                  return musLida;
+               }
+            } else {
+               file.skipBytes(qntBytesInic - 5); // Pula para o próximo registro
+            }
+         }
+      } catch (IOException e) {
+         e.printStackTrace();
+         musLida = null;
+      }
+
+      return musLida;
    }
 
    public Pokemon delete(int pokemonID) throws IOException {

@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 class Pokemon {
-    //Entender melhor esse atributo
+    // Entender melhor esse atributo
     public boolean lapide;
     private String name, generation, specie, hiddenAbility;
     private int index, pokedexNum;
@@ -51,7 +51,8 @@ class Pokemon {
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
-    public void setReleaseDate(long longDate){
+
+    public void setReleaseDate(long longDate) {
         Date date = new Date(longDate);
         this.releaseDate = date;
     }
@@ -106,7 +107,7 @@ class Pokemon {
     // types, abilities]
     public void parseCSV(String csvLine) {
         String[] cells = csvLine.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
-        this.lapide = true; 
+        this.lapide = true;
         this.setIndex(Integer.parseInt(cells[0]));
         this.setPokedexNum(Integer.parseInt(cells[1]));
         this.setName(cells[2]);
@@ -124,7 +125,7 @@ class Pokemon {
     }
 
     public ArrayList<String> formatArray(String arrayField) {
-        
+
         String[] array = (arrayField.replaceAll("\"", "")).split(", ");
         ArrayList<String> arrayList = new ArrayList<String>();
         try {
@@ -151,6 +152,7 @@ class Pokemon {
 
         // Converter dados da Classe Pokemon para um array de Bytes
 
+        dos.writeBoolean(this.lapide);
         dos.writeInt(getIndex());
         dos.writeInt(getPokedexNum());
         dos.writeInt(getName().getBytes(Charset.forName("UTF-8")).length);
