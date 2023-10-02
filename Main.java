@@ -11,7 +11,7 @@ public class Main {
    public static void main(String args[]) throws IOException {
       Scanner fetch = new Scanner(System.in);
       CRUD crud = new CRUD("pokemonDB");
-      String basefile = "pokemon.csv";
+      String basefile = "pokemonSample.csv";
       // ArvoreB arv = new ArvoreB(8);
       // HashExtensivel hash= new HashExtensivel(1);
 
@@ -67,8 +67,8 @@ public class Main {
                      String pokemonName = fetch.nextLine();
                      System.out.println("Digite o número da pokedex: ");
                      int pokedexID = fetch.nextInt();
-                     System.out.println("Digite o número da geração: ");
-                     int generation = fetch.nextInt();
+                     System.out.println("Escreva o número da geração: ");
+                     String generation = fetch.nextLine();
                      System.out.println("Escreva o nome da especie de Pokemon: ");
                      String specie = fetch.nextLine();
                      System.out.println("Escreva o nome da habilidade escodida: ");
@@ -140,13 +140,36 @@ public class Main {
                break;
 
             // Read
-
+            /*
+             * case 2:
+             * System.out.print("Digite o ID do game que deseja pesquisar no arquivo: ");
+             * int readID = sc.nextInt();
+             * try{
+             * fileAF.Read(readID).getAppId(); // Teste para ver se game existe (teste de
+             * pointer)
+             * System.out.println("\nArquivo encontrado!\n");
+             * System.out.println(fileAF.Read(readID).getAppId() +" "+
+             * fileAF.Read(readID).getName() + " " + fileAF.Read(readID).getPrice()+" "+
+             * fileAF.Read(readID).getReleaseDate());
+             * for(int i=0; i<fileAF.Read(readID).getGenres().size(); i++){
+             * System.out.print(fileAF.Read(readID).getGenres().get(i));
+             * if(i!=fileAF.Read(readID).getGenres().size()-1){
+             * System.out.print(", ");
+             * }
+             * }
+             * System.out.println();
+             * } catch(Exception e){
+             * System.out.println("\nArquivo não encontrado!");
+             * }
+             * 
+             * break;
+             */
             case 2:
                try {
                   System.out.println("Digite o ID: ");
                   int readID = fetch.nextInt();
-                  crud.Read(readID).getIndex(); // Teste para ver se pokemon existe (teste de pointer)
-                  if (crud.Read(readID).lapide) {
+                  crud.read(readID).getIndex(); // Teste para ver se pokemon existe (teste de pointer)
+                  if (crud.read(readID).lapide) {
                      System.out.println("\nArquivo encontrado!\n");
                      System.out.print(
                            "ID: " + crud.read(readID).getIndex() + ", Pokedex ID: " + crud.read(readID).getPokedexNum()

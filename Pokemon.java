@@ -91,6 +91,8 @@ class Pokemon {
     }
 
     public long getReleaseDate() {
+        System.out.println(this.releaseDate);
+        System.out.println(this.releaseDate.getTime());
         return this.releaseDate.getTime();
     }
 
@@ -130,9 +132,7 @@ class Pokemon {
         ArrayList<String> arrayList = new ArrayList<String>();
         try {
             arrayList.add(array[0]);
-            System.out.println("array[0]" + array[0]);
             if (array.length > 1) {
-                System.out.println("array[1]" + array[1]);
                 arrayList.add(array[1]);
             }
         } catch (Exception e) {

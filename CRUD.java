@@ -105,7 +105,7 @@ public class CRUD {
    public Pokemon Read(int pokemonIndex) throws IOException {
       long pos;
       int qntBytesInic, id;
-      Pokemon musLida = null;
+      Pokemon pokemon = null;
       boolean lap;
 
       file.seek(0);
@@ -115,12 +115,12 @@ public class CRUD {
             pos = file.getFilePointer(); // Pega a posição do ponteiro no momento atual(está apontando para a quantidade
                                          // de bytes no registo).
             qntBytesInic = file.readInt(); // Pega o tamanho do registo que será selecionado
-            lap = file.readBoolean(); // Armazena o valor da lápide do registro Game específico
-            id = file.readInt(); // Armazena o ID do registro Game específico
+            lap = file.readBoolean(); // Armazena o valor da lápide do registro Pokemon específico
+            id = file.readInt(); // Armazena o ID do registro Pokemon específico
             if (id == pokemonIndex) { // Verifica se o id é o mesmo que o selecionado
                if (lap) { // Verifica se a lápide é válida, ou seja, se o registro foi apagado ou não
                   try {
-                     musLida = binToPokemon(file, pos); // Gera uma instância de Game e popula com as informações do
+                     pokemon = binToPokemon(file, pos); // Gera uma instância de Game e popula com as informações do
                                                         // banco
                      // de dados
                      break;
@@ -128,7 +128,7 @@ public class CRUD {
                      e.printStackTrace();
                   }
                } else {
-                  return musLida;
+                  return pokemon;
                }
             } else {
                file.skipBytes(qntBytesInic - 5); // Pula para o próximo registro
@@ -136,10 +136,10 @@ public class CRUD {
          }
       } catch (IOException e) {
          e.printStackTrace();
-         musLida = null;
+         pokemon = null;
       }
 
-      return musLida;
+      return pokemon;
    }
 
    public Pokemon delete(int pokemonID) throws IOException {
