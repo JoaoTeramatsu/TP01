@@ -12,14 +12,6 @@ public class Main {
       Scanner fetch = new Scanner(System.in);
       CRUD crud = new CRUD("pokemonDB");
       String basefile = "pokemonSample.csv";
-      // ArvoreB arv = new ArvoreB(8);
-      // HashExtensivel hash= new HashExtensivel(1);
-
-      // Criar lista invertida para gêneros
-      // ListaInvertida listaGeneros = new ListaInvertida("listaGeneros");
-
-      // Criar lista invertida para nome
-      // ListaInvertida listaNomes = new ListaInvertida("listaNomes");
       System.out.println("Deseja carregar o arquivo?");
       System.out.println("1-Sim \n2-Nao");
 
@@ -33,7 +25,7 @@ public class Main {
                Pokemon pokemon = new Pokemon();
                pokemon.parseCSV(csvLine);
                crud.create(pokemon);
-               long pos = crud.getIndex(pokemon);
+               // long pos = crud.getIndex(pokemon);
                // arv.insere(m.getId(), pos);
                // hash.insert(m.getId(), pos);
                // listaGeneros.addDocument((int) pos, m.getGenres());
@@ -58,25 +50,31 @@ public class Main {
             // CREATE
             case 1:
                try {
+                  String gen = "";
+                  String hiddenAbility = "";
+                  String date = "";
                   System.out.println("Digite o ID: ");
                   int readID = fetch.nextInt();
+                  String lixo = fetch.nextLine();
                   if (crud.search(readID)) {
                      // Personalizar para meu CSV e campos de Pokemon
                      System.out.println("Digite o nome do Pokemon: ");
-                     fetch.nextLine();
                      String pokemonName = fetch.nextLine();
                      System.out.println("Digite o número da pokedex: ");
                      int pokedexID = fetch.nextInt();
+                     lixo = fetch.nextLine();
                      System.out.println("Escreva o número da geração: ");
-                     String generation = fetch.nextLine();
+                     gen = fetch.nextLine();
+
                      System.out.println("Escreva o nome da especie de Pokemon: ");
                      String specie = fetch.nextLine();
+
                      System.out.println("Escreva o nome da habilidade escodida: ");
-                     String hiddenAbility = fetch.nextLine();
+                     hiddenAbility = fetch.nextLine();
                      // data
                      System.out.println("Digite a data de lançamento do Pokemon: ");
                      System.out.println("Ex.: yyyy-MM-dd");
-                     String releaseDate = fetch.nextLine();
+                     date = fetch.nextLine();
 
                      // arrays types
                      System.out.println("Escreva os tipos do pokemon (separado por virgulas)");
@@ -84,25 +82,26 @@ public class Main {
                      String typesStr = fetch.nextLine();
                      String[] types = typesStr.split(",");
                      ArrayList<String> typesAL = new ArrayList();
-                     for (int i = 0; i < types.length; i++)
+                     for (int i = 0; i < types.length; i++) {
                         typesAL.add(types[i]);
-
+                     }
                      // abilities
                      System.out.println("Escreva as habilidades do Pokemon (separado por virgulas)");
                      System.out.println("Keen Eye, Tangled Feet");
                      String abilitiesStr = fetch.nextLine();
                      String[] abilities = abilitiesStr.split(",");
                      ArrayList<String> abilitiesAL = new ArrayList();
-                     for (int i = 0; i < abilities.length; i++)
+                     for (int i = 0; i < abilities.length; i++) {
                         abilitiesAL.add(types[i]);
-
+                     }
                      Pokemon pokemon = new Pokemon();
-                     String line = readID + "," + pokedexID + "," + pokemonName + "," + generation + "," + specie + ","
-                           + hiddenAbility + ",\"" + typesStr + "\",\"" + abilitiesStr + "\"";
+                     String line = readID + "," + pokedexID + "," + pokemonName + "," + gen + "," + specie + ","
+                           + hiddenAbility + "," + date + ",\"" + typesStr + "\"," + "\"" + abilitiesStr + "\"";
+                     System.out.println(line);
                      pokemon.parseCSV(line);
                      crud.create(pokemon);
 
-                     long pos = crud.getIndex(pokemon);
+                     // long pos = crud.getIndex(pokemon);
                      // arv.insere(readID, pos);
                      // hash.insert(readID, choice);
                      // listaGeneros.addDocument((int) pos, mus.getGenres());
@@ -110,26 +109,21 @@ public class Main {
                      System.out.println("\nArquivo atualizado!\n");
 
                      System.out.print(
-                           "ID: " + crud.read(readID).getIndex() + ", Pokedex ID: " + crud.read(readID).getPokedexNum()
-                                 + ", Nome do Pokemon: " + crud.read(readID).getName()
-                                 + ", Geração: " + crud.read(readID).getGeneration()
-                                 + ", Especie: " + crud.read(readID).getSpecie()
-                                 + ", Hidden Hability: " + crud.read(readID).getHiddenAbility() + ", ");
+                           "ID: " + pokemon.getIndex() + ", Pokedex ID: " + pokemon.getPokedexNum()
+                                 + ", Nome do Pokemon: " + pokemon.getName()
+                                 + ", Geração: " + pokemon.getGeneration()
+                                 + ", Especie: " + pokemon.getSpecie()
+                                 + ", Hidden Hability: " + pokemon.getHiddenAbility() + ", ");
 
-                     System.out.print(" Tipos: ");
-                     for (int i = 0; i < crud.read(readID).getTypes().size(); i++) {
-                        System.out.print(crud.read(readID).getTypes().get(i));
-                        if (i != crud.read(readID).getTypes().size() - 1) {
-                           System.out.print(", ");
-                        }
+                     System.out.print("Tipos: ");
+                     for (int i = 0; i < pokemon.getTypes().size(); i++) {
+                        System.out.print(pokemon.getTypes().get(i) + " ");
                      }
                      System.out.print(" Habilidades: ");
-                     for (int i = 0; i < crud.read(readID).getAbilities().size(); i++) {
-                        System.out.print(crud.read(readID).getAbilities().get(i));
-                        if (i != crud.read(readID).getAbilities().size() - 1) {
-                           System.out.print(", ");
-                        }
+                     for (int i = 0; i < pokemon.getAbilities().size(); i++) {
+                        System.out.print(pokemon.getAbilities().get(i) + " ");
                      }
+                     System.out.println("");
                      System.out.println("");
                   } else
                      System.out.println("ID já existente.");
@@ -138,32 +132,6 @@ public class Main {
                }
 
                break;
-
-            // Read
-            /*
-             * case 2:
-             * System.out.print("Digite o ID do game que deseja pesquisar no arquivo: ");
-             * int readID = sc.nextInt();
-             * try{
-             * fileAF.Read(readID).getAppId(); // Teste para ver se game existe (teste de
-             * pointer)
-             * System.out.println("\nArquivo encontrado!\n");
-             * System.out.println(fileAF.Read(readID).getAppId() +" "+
-             * fileAF.Read(readID).getName() + " " + fileAF.Read(readID).getPrice()+" "+
-             * fileAF.Read(readID).getReleaseDate());
-             * for(int i=0; i<fileAF.Read(readID).getGenres().size(); i++){
-             * System.out.print(fileAF.Read(readID).getGenres().get(i));
-             * if(i!=fileAF.Read(readID).getGenres().size()-1){
-             * System.out.print(", ");
-             * }
-             * }
-             * System.out.println();
-             * } catch(Exception e){
-             * System.out.println("\nArquivo não encontrado!");
-             * }
-             * 
-             * break;
-             */
             case 2:
                try {
                   System.out.println("Digite o ID: ");
@@ -198,89 +166,64 @@ public class Main {
 
             // Update
             case 3:
+               System.out.print("Digite o ID do Pokemon que deseja atualizar no arquivo: ");
+               int updateID = fetch.nextInt();
+               String lixo = fetch.nextLine();
+               boolean checkArq;
                try {
-                  System.out.println("Infome o ID: ");
-                  int readID = fetch.nextInt();
-                  boolean resp = crud.getDeletedIndex(readID);
-                  if (resp == false) {
-                     System.out.println("ID já cadastrado");
-                     break;
-                  }
-                  System.out.println("Digite o ID atualizado: ");
-                  int novoID = fetch.nextInt();
-                  if ((crud.search(novoID))) {
-                     // Personalizar para meu CSV e campos de Pokemon
-                     System.out.println("Digite o nome do Pokemon: ");
-                     fetch.nextLine();
-                     String pokemonName = fetch.nextLine();
-                     System.out.println("Digite o número da pokedex: ");
-                     int pokedexID = fetch.nextInt();
-                     System.out.println("Digite o número da geração: ");
-                     int generation = fetch.nextInt();
-                     System.out.println("Escreva o nome da especie de Pokemon: ");
-                     String specie = fetch.nextLine();
-                     System.out.println("Escreva o nome da habilidade escodida: ");
-                     String hiddenAbility = fetch.nextLine();
-                     // data
-                     System.out.println("Digite a data de lançamento do Pokemon: ");
-                     System.out.println("Ex.: yyyy-MM-dd");
-                     String releaseDate = fetch.nextLine();
-
-                     // arrays types
-                     System.out.println("Escreva os tipos do pokemon (separado por virgulas)");
-                     System.out.println("Ex: Fire, Rock");
-                     String typesStr = fetch.nextLine();
-                     String[] types = typesStr.split(",");
-                     ArrayList<String> typesAL = new ArrayList();
-                     for (int i = 0; i < types.length; i++)
-                        typesAL.add(types[i]);
-
-                     // abilities
-                     System.out.println("Escreva as habilidades do Pokemon (separado por virgulas)");
-                     System.out.println("Keen Eye, Tangled Feet");
-                     String abilitiesStr = fetch.nextLine();
-                     String[] abilities = abilitiesStr.split(",");
-                     ArrayList<String> abilitiesAL = new ArrayList();
-                     for (int i = 0; i < abilities.length; i++)
-                        abilitiesAL.add(types[i]);
-
-                     Pokemon pokemon = new Pokemon();
-                     String line = readID + "," + pokedexID + "," + pokemonName + "," + generation + "," + specie + ","
-                           + hiddenAbility + ",\"" + typesStr + "\",\"" + abilitiesStr + "\"";
-                     pokemon.parseCSV(line);
-                     crud.delete(readID);
-                     crud.create(pokemon);
-                     System.out.println("\nArquivo atualizado!\n");
-
-                     System.out.print(
-                           "ID: " + crud.read(readID).getIndex() + ", Pokedex ID: " + crud.read(readID).getPokedexNum()
-                                 + ", Nome do Pokemon: " + crud.read(readID).getName()
-                                 + ", Geração: " + crud.read(readID).getGeneration()
-                                 + ", Especie: " + crud.read(readID).getSpecie()
-                                 + ", Hidden Hability: " + crud.read(readID).getHiddenAbility() + ", ");
-
-                     System.out.print(" Tipos: ");
-                     for (int i = 0; i < crud.read(readID).getTypes().size(); i++) {
-                        System.out.print(crud.read(readID).getTypes().get(i));
-                        if (i != crud.read(readID).getTypes().size() - 1) {
-                           System.out.print(", ");
-                        }
-                     }
-                     System.out.print(" Habilidades: ");
-                     for (int i = 0; i < crud.read(readID).getAbilities().size(); i++) {
-                        System.out.print(crud.read(readID).getAbilities().get(i));
-                        if (i != crud.read(readID).getAbilities().size() - 1) {
-                           System.out.print(", ");
-                        }
-                     }
-                     System.out.println("");
-                  } else {
-                     System.out.println("ID já cadastrado");
-                  }
+                  crud.delete(updateID);
+                  checkArq = true;
                } catch (Exception e) {
-                  System.out.println("Erro ao Atualizar o arquivo.");
+                  checkArq = false;
                }
+               if (!checkArq) {
+                  System.out.println("\nO arquivo não existe!");
+                  break;
+               }
+               System.out.println("Digite o nome do Pokemon: ");
+               String pokemonName = fetch.nextLine();
+               System.out.println("Digite o número da pokedex: ");
+               int pokedexID = fetch.nextInt();
+               lixo = fetch.nextLine();
+               System.out.println("Escreva o número da geração: ");
+               String gen = fetch.nextLine();
 
+               System.out.println("Escreva o nome da especie de Pokemon: ");
+               String specie = fetch.nextLine();
+
+               System.out.println("Escreva o nome da habilidade escodida: ");
+               String hiddenAbility = fetch.nextLine();
+               // data
+               System.out.println("Digite a data de lançamento do Pokemon: ");
+               System.out.println("Ex.: yyyy-MM-dd");
+               String date = fetch.nextLine();
+
+               // arrays types
+               System.out.println("Escreva os tipos do pokemon (separado por virgulas)");
+               System.out.println("Ex: Fire, Rock");
+               String typesStr = fetch.nextLine();
+               String[] types = typesStr.split(",");
+               ArrayList<String> typesAL = new ArrayList();
+               for (int i = 0; i < types.length; i++) {
+                  typesAL.add(types[i]);
+               }
+               // abilities
+               System.out.println("Escreva as habilidades do Pokemon (separado por virgulas)");
+               System.out.println("Keen Eye, Tangled Feet");
+               String abilitiesStr = fetch.nextLine();
+               String[] abilities = abilitiesStr.split(",");
+               ArrayList<String> abilitiesAL = new ArrayList();
+               for (int i = 0; i < abilities.length; i++) {
+                  abilitiesAL.add(types[i]);
+               }
+               Pokemon pokemon = new Pokemon();
+               String line = pokedexID + "," + pokedexID + "," + pokemonName + "," + gen + "," + specie + ","
+                     + hiddenAbility + "," + date + ",\"" + typesStr + "\"," + "\"" + abilitiesStr + "\"";
+               System.out.println(line);
+               pokemon.parseCSV(line);
+               crud.create(pokemon);
+               System.out.println("\nRegistro atualizado com sucesso!");
+               // Enviar para Update no CRUD
                break;
 
             // Delete
@@ -289,7 +232,7 @@ public class Main {
                try {
                   System.out.println("Informe o ID: ");
                   int readID = fetch.nextInt();
-                  crud.read(readID).getIndex(); // Teste para ver se game existe (teste de pointer)
+                  crud.read(readID).getIndex();
                   if (crud.read(readID).lapide) {
                      System.out.println("\nArquivo encontrado!\n");
                      System.out.print(
