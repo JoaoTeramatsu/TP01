@@ -10,6 +10,8 @@ import java.util.Scanner;
 public class Main {
    public static void main(String args[]) throws IOException {
       Scanner fetch = new Scanner(System.in);
+      ArvoreB arv = new ArvoreB(8);
+      HashExtensivel hash = new HashExtensivel(1);
       CRUD crud = new CRUD("pokemonDB");
       String basefile = "pokemonSample.csv";
       System.out.println("Deseja carregar o arquivo?");
@@ -24,12 +26,9 @@ public class Main {
             while ((csvLine = br.readLine()) != null) {
                Pokemon pokemon = new Pokemon();
                pokemon.parseCSV(csvLine);
-               crud.create(pokemon);
-               // long pos = crud.getIndex(pokemon);
-               // arv.insere(m.getId(), pos);
-               // hash.insert(m.getId(), pos);
-               // listaGeneros.addDocument((int) pos, m.getGenres());
-               // listaNomes.addDocument((int) pos, m.getReleaseName());
+               long pos = crud.create(pokemon);
+               arv.insere(pokemon.getIndex(), pos);
+               hash.insert(pokemon.getIndex(), pos);
             }
          } catch (IOException e) {
             e.printStackTrace();
@@ -99,7 +98,9 @@ public class Main {
                            + hiddenAbility + "," + date + ",\"" + typesStr + "\"," + "\"" + abilitiesStr + "\"";
                      System.out.println(line);
                      pokemon.parseCSV(line);
-                     crud.create(pokemon);
+                     long pos = crud.create(pokemon);
+                     arv.insere(readID, pos);
+                     hash.insert(readID, choice);
 
                      // long pos = crud.getIndex(pokemon);
                      // arv.insere(readID, pos);
@@ -229,44 +230,32 @@ public class Main {
             // Delete
 
             case 4:
+               System.out.print("Digite o ID do game que deseja deletar no arquivo: ");
+               int deleteID = fetch.nextInt();
                try {
-                  System.out.println("Informe o ID: ");
-                  int readID = fetch.nextInt();
-                  crud.read(readID).getIndex();
-                  if (crud.read(readID).lapide) {
-                     System.out.println("\nArquivo encontrado!\n");
-                     System.out.print(
-                           "ID: " + crud.read(readID).getIndex() + ", Pokedex ID: " + crud.read(readID).getPokedexNum()
-                                 + ", Nome do Pokemon: " + crud.read(readID).getName()
-                                 + ", Geração: " + crud.read(readID).getGeneration()
-                                 + ", Especie: " + crud.read(readID).getSpecie()
-                                 + ", Hidden Hability: " + crud.read(readID).getHiddenAbility() + ", ");
+                  Pokemon pokemonDeleted = crud.Read(deleteID); // Teste para ver se existe game
+                  System.out.print(
+                        "ID: " + pokemonDeleted.getIndex() + ", Pokedex ID: " + pokemonDeleted.getPokedexNum()
+                              + ", Nome do pokemon deletado: " + pokemonDeleted.getName()
+                              + ", Geração: " + pokemonDeleted.getGeneration()
+                              + ", Especie: " + pokemonDeleted.getSpecie()
+                              + ", Hidden Hability: " + pokemonDeleted.getHiddenAbility() + ", ");
 
-                     System.out.print(" Tipos: ");
-                     for (int i = 0; i < crud.read(readID).getTypes().size(); i++) {
-                        System.out.print(crud.read(readID).getTypes().get(i));
-                        if (i != crud.read(readID).getTypes().size() - 1) {
-                           System.out.print(", ");
-                        }
-                     }
-                     System.out.print(" Habilidades: ");
-                     for (int i = 0; i < crud.read(readID).getAbilities().size(); i++) {
-                        System.out.print(crud.read(readID).getAbilities().get(i));
-                        if (i != crud.read(readID).getAbilities().size() - 1) {
-                           System.out.print(", ");
-                        }
-                     }
-                     System.out.println("");
-                     crud.delete(readID);
-                     System.out.println(" ");
-                     System.out.println("Arquivo deletado com sucesso!");
-                     System.out.println(" ");
-                  } else
-                     System.out.println("Arquivo não Encontrado");
+                  System.out.print("Tipos: ");
+                  for (int i = 0; i < pokemonDeleted.getTypes().size(); i++) {
+                     System.out.print(pokemonDeleted.getTypes().get(i) + " ");
+                  }
+                  System.out.print(" Habilidades: ");
+                  for (int i = 0; i < pokemonDeleted.getAbilities().size(); i++) {
+                     System.out.print(pokemonDeleted.getAbilities().get(i) + " ");
+                  }
+                  System.out.println("");
+                  crud.delete(deleteID); // Deleta o game
+                  System.out.println("\nArquivo deletado com sucesso!");
                } catch (Exception e) {
-                  System.out.println("Erro ao deletar Arquivo.");
+                  System.out.println("\nArquivo não encontrado!");
                }
-
+               // Enviar para Delete no CRUD
                break;
 
             // Sair

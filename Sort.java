@@ -6,17 +6,17 @@ public class Sort {
     private RandomAccessFile fileReader;
     private long position;
 
-    File file_1 = new File("arquivo1.db");
-    RandomAccessFile file1 = new RandomAccessFile("arquivo1.db", "rw");
+    File file_1 = new File("file1.db");
+    RandomAccessFile file1 = new RandomAccessFile("file1.db", "rw");
 
-    File file_2 = new File("arquivo2.db");
-    RandomAccessFile file2 = new RandomAccessFile("arquivo2.db", "rw");
+    File file_2 = new File("file2.db");
+    RandomAccessFile file2 = new RandomAccessFile("file2.db", "rw");
 
-    File file_3 = new File("arquivo3.db");
-    RandomAccessFile file3 = new RandomAccessFile("arquivo3.db", "rw");
+    File file_3 = new File("file3.db");
+    RandomAccessFile file3 = new RandomAccessFile("file3.db", "rw");
 
-    File file_4 = new File("arquivo4.db");
-    RandomAccessFile file4 = new RandomAccessFile("arquivo4.db", "rw");
+    File file_4 = new File("file4.db");
+    RandomAccessFile file4 = new RandomAccessFile("file4.db", "rw");
 
     Sort(String file) throws FileNotFoundException {
         this.file = new File(file);
@@ -405,8 +405,8 @@ public class Sort {
             file.readInt();
             s[i] = file.readUTF();
         }
-   
+
         return pokemon;
     }
 
-    }
+}

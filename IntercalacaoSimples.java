@@ -80,7 +80,7 @@ public class IntercalacaoSimples {
 
                 if (lapis == false) {
                     Pokemon registro = new Pokemon();
-                    registro.toByteArray()(idRegistro, lapis, len, ba);
+                    registro.toByteArray();
 
                     registros.add(registro);
                 }
@@ -102,10 +102,10 @@ public class IntercalacaoSimples {
 
                 for (Pokemon registro : blocoOrdenavelTmp) {
                     tmps[contadorTmp % arqTmp].seek(tmps[contadorTmp % arqTmp].length());
-                    //tmps[contadorTmp % arqTmp].writeInt(registro.getIdRegistro());
-                    //tmps[contadorTmp % arqTmp].writeBoolean(registro.isLapide());
-                    //tmps[contadorTmp % arqTmp].writeInt(registro.getTamanho());
-                    //tmps[contadorTmp % arqTmp].write(registro.getAnime().toByteArray());
+                    // tmps[contadorTmp % arqTmp].writeInt(registro.getIdRegistro());
+                    // tmps[contadorTmp % arqTmp].writeBoolean(registro.isLapide());
+                    // tmps[contadorTmp % arqTmp].writeInt(registro.getTamanho());
+                    // tmps[contadorTmp % arqTmp].write(registro.getAnime().toByteArray());
                 }
 
                 contadorTmp++;
@@ -166,7 +166,7 @@ public class IntercalacaoSimples {
                             tmp1.read(ba);
 
                             Pokemon registro = new Pokemon();
-                            registro.toByteArray()(idRegistro, lapis, len, ba);
+                            registro.toByteArray();
 
                             registrosTmp1.add(registro);
 
@@ -186,7 +186,7 @@ public class IntercalacaoSimples {
                             tmp2.read(ba);
 
                             Pokemon registro = new Pokemon();
-                            registro.toByteArray()(idRegistro, lapis, len, ba);
+                            registro.toByteArray();
 
                             registrosTmp2.add(registro);
 
@@ -222,10 +222,10 @@ public class IntercalacaoSimples {
 
                             for (Pokemon registro : blocoOrdenavelTmp) {
                                 numeroArquivoEscrita.seek(numeroArquivoEscrita.length());
-                                //numeroArquivoEscrita.writeInt(registro.getId());
-                                //numeroArquivoEscrita.writeBoolean(registro.getLapide());
-                                //numeroArquivoEscrita.writeInt(registro.getTamanho());
-                                //numeroArquivoEscrita.write(registro.getAnime().toByteArray());
+                                // numeroArquivoEscrita.writeInt(registro.getId());
+                                // numeroArquivoEscrita.writeBoolean(registro.getLapide());
+                                // numeroArquivoEscrita.writeInt(registro.getTamanho());
+                                // numeroArquivoEscrita.write(registro.getAnime().toByteArray());
                             }
 
                             if (blocoOrdenavelTmp.size() >= qtdRegistros) {
@@ -255,7 +255,7 @@ public class IntercalacaoSimples {
                             tmp3.read(ba);
 
                             Pokemon registro = new Pokemon();
-                            registro.toByteArray()(idRegistro, lapis, len, ba);
+                            registro.toByteArray();
 
                             registrosTmp3.add(registro);
 
@@ -275,7 +275,7 @@ public class IntercalacaoSimples {
                             tmp4.read(ba);
 
                             Pokemon registro = new Pokemon();
-                            registro.toByteArray()(idRegistro, lapis, len, ba);
+                            registro.toByteArray();
 
                             registrosTmp4.add(registro);
 
@@ -310,11 +310,11 @@ public class IntercalacaoSimples {
                             numeroArquivoEscrita = (rodadaArquivo % 2 == 0) ? tmp1 : tmp2;
 
                             for (Pokemon registro : blocoOrdenavelTmp) {
-                                //numeroArquivoEscrita.seek(numeroArquivoEscrita.length());
-                                //numeroArquivoEscrita.writeInt(registro.getId());
-                                //numeroArquivoEscrita.writeBoolean(registro.getLapide());
-                               // numeroArquivoEscrita.writeInt(registro.getTamanho());
-                                //numeroArquivoEscrita.write(registro.getAnime().toByteArray());
+                                // numeroArquivoEscrita.seek(numeroArquivoEscrita.length());
+                                // numeroArquivoEscrita.writeInt(registro.getId());
+                                // numeroArquivoEscrita.writeBoolean(registro.getLapide());
+                                // numeroArquivoEscrita.writeInt(registro.getTamanho());
+                                // numeroArquivoEscrita.write(registro.getAnime().toByteArray());
                             }
 
                             if (blocoOrdenavelTmp.size() >= qtdRegistros) {
@@ -354,11 +354,11 @@ public class IntercalacaoSimples {
             RandomAccessFile arqFinal = new RandomAccessFile("ordenacao/intercalacao_comum.db", "rw");
 
             for (Pokemon registro : listaOrdenada) {
-                //arqFinal.seek(arqFinal.length());
-                //arqFinal.writeInt(registro.getId());
-                //arqFinal.writeBoolean(registro.getLapide());
-                //arqFinal.writeInt(registro.getTamanho());
-                //arqFinal.write(registro.getAnime().toByteArray());
+                // arqFinal.seek(arqFinal.length());
+                // arqFinal.writeInt(registro.getId());
+                // arqFinal.writeBoolean(registro.getLapide());
+                // arqFinal.writeInt(registro.getTamanho());
+                // arqFinal.write(registro.getAnime().toByteArray());
             }
 
             arqFinal.close();
@@ -392,12 +392,12 @@ public class IntercalacaoSimples {
             arq.read(ba);
 
             Pokemon pokemon = new Pokemon();
-            pokemon.toByteArray()(idTeste, lapis, len, ba);
+            pokemon.toByteArray();
 
             ponteiroBase = arq.getFilePointer();
 
             // Escrever no arquivo de impressão
-            //writer.write(pokemon.toString2(ba));
+            // writer.write(pokemon.toString2(ba));
             writer.newLine();
         }
 

@@ -12,6 +12,35 @@ public class CRUD {
       this.file = new RandomAccessFile(filename, "rw");
    }
 
+   // public long getPos(RandomAccessFile file, Pokemon pokemon) throws IOException
+   // {
+   // file.seek(0); // Ponteiro vai para o inicio do arquivo
+   // file.writeInt(pokemon.getId()); // Escreve no inicio do registro o seu ID
+   // file.seek(file.length()); // Ponteiro vai para o final do arquivo
+   // long pos = file.getFilePointer();
+   // byte[] byteArr = pokemon.toByteArray(); // Vetor de Bytes populado com os
+   // dados do CSV já filtrados
+   // file.writeInt(pokemon.toByteArray().length); // Escreve o tamanho desse vetor
+   // de Bytes
+   // file.write(byteArr); // Escreve o vetor de Bytes
+   // return pos;
+   // }
+
+   // public long getPos(Musica mus) throws IOException {
+   // return getPos(file, mus);
+   // }
+
+   public long create(RandomAccessFile file, Pokemon pokemon) throws IOException {
+      file.seek(0);
+      file.writeInt(pokemon.getIndex());
+      file.seek(file.length());
+      long pos = file.getFilePointer();
+      byte[] byteArr = pokemon.toByteArray();
+      file.writeInt(pokemon.toByteArray().length);
+      file.write(byteArr);
+      return pos;
+   }
+
    public long getIndex(RandomAccessFile file, Pokemon pokemon) throws IOException {
       file.seek(0); // Ponteiro vai para o inicio do arquivo
       file.writeInt(pokemon.getIndex()); // Escreve no inicio do registro o seu ID
@@ -55,53 +84,8 @@ public class CRUD {
       return getIndex(file, pokemon);
    }
 
-   public void create(RandomAccessFile file, Pokemon pokemon) throws IOException {
-      file.seek(0);
-      file.writeInt(pokemon.getIndex());
-      file.seek(file.length());
-
-      byte[] byteArr = pokemon.toByteArray();
-      file.writeInt(pokemon.toByteArray().length);
-      file.write(byteArr);
-   }
-
-   public void create(Pokemon pokemon) throws IOException {
-      create(this.file, pokemon);
-   }
-
-   // Fazer Método READ
-   public Pokemon read(int pokemonIndex) throws IOException {
-      long pos;
-      int bytes, id;
-      boolean isAlive;
-
-      Pokemon pokemon = null;
-
-      file.seek(0);
-      file.readInt(); // Lê o index do registro x
-      try {
-         System.out.println(file.length());
-         while (file.getFilePointer() < file.length()) {
-            pos = file.getFilePointer();
-            bytes = file.readInt();
-            isAlive = file.readBoolean();
-            id = file.readInt();
-            if (id == pokemonIndex && isAlive) {
-               try {
-                  pokemon = binToPokemon(file, pos);
-                  break;
-               } catch (Exception e) {
-                  e.printStackTrace();
-               }
-            } else {
-               // entender esse -5
-               file.skipBytes(pokemonIndex - 5);
-            }
-         }
-      } catch (IOException e) {
-         e.printStackTrace();
-      }
-      return pokemon;
+   public long create(Pokemon pokemon) throws IOException {
+      return create(this.file, pokemon);
    }
 
    public Pokemon Read(int entradaID) throws IOException {

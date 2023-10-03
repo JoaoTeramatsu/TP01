@@ -4,27 +4,26 @@ import java.util.*;
 class ComparadorPorId implements Comparator<Pokemon> {
     @Override
     public int compare(Pokemon r1, Pokemon r2) {
-        return Integer.compare(r1.getId(), r2.getId());
+        return Integer.compare(r1.getIndex(), r2.getIndex());
     }
 }
 
 public class OrdenacaoExterna {
     int bloco = 100;
     int qtdRegistros = 0;
-    
+
     public void intercalacaoBalanceadaComum() {
         qtdRegistros = contaRegistros("dados/animes.db");
-        
+
         distribuicaoComum("dados/animes.db");
 
-        
         intercalacaoComum();
     }
-    
+
     public int contaRegistros(String enderecoDB) {
-        
+
         int totalRegistros = 0;
-        
+
         // Leitura dos registros
         try (RandomAccessFile arq = new RandomAccessFile(enderecoDB, "r")) {
             // Endereço do ponteiro de início
@@ -84,7 +83,7 @@ public class OrdenacaoExterna {
 
                 if (lapis == false) {
                     Pokemon registro = new Pokemon();
-                    registro.toByteArray()(registro.getId(), lapis, len, ba);
+                    registro.toByteArray();
 
                     m.add(registro);
                 }
@@ -106,14 +105,14 @@ public class OrdenacaoExterna {
 
                 RandomAccessFile numeroArquivoEscrita;
                 numeroArquivoEscrita = (contadorTmp % 2 == 0) ? tmp1 : tmp2;
-                CRUD c= new CRUD(enderecoDB);
+                CRUD c = new CRUD(enderecoDB);
 
                 for (Pokemon registro : blocoOrdenavelTmp) {
-                    //numeroArquivoEscrita.seek(numeroArquivoEscrita.length());
-                    //numeroArquivoEscrita.writeInt(registro.getId());
-                    //numeroArquivoEscrita.writeBoolean(registro.getLapide());
-                    //numeroArquivoEscrita.writeInt(c.getTamanho(registro.getId()));
-                    //numeroArquivoEscrita.write(registro.toByteArray());
+                    // numeroArquivoEscrita.seek(numeroArquivoEscrita.length());
+                    // numeroArquivoEscrita.writeInt(registro.getIndex());
+                    // numeroArquivoEscrita.writeBoolean(registro.getLapide());
+                    // numeroArquivoEscrita.writeInt(c.getTamanho(registro.getIndex()));
+                    // numeroArquivoEscrita.write(registro.toByteArray());
                 }
 
                 contadorTmp++;
@@ -127,18 +126,12 @@ public class OrdenacaoExterna {
         }
     }
 
-    
-
-            
-
     public void intercalacaoComum() {
         try {
             RandomAccessFile tmp1 = new RandomAccessFile("tmps/tmp1.db", "rw");
             RandomAccessFile tmp2 = new RandomAccessFile("tmps/tmp2.db", "rw");
             RandomAccessFile tmp3 = new RandomAccessFile("tmps/tmp3.db", "rw");
             RandomAccessFile tmp4 = new RandomAccessFile("tmps/tmp4.db", "rw");
-
-            
 
             ArrayList<Pokemon> registrosTmp1 = new ArrayList<Pokemon>();
             ArrayList<Pokemon> registrosTmp2 = new ArrayList<Pokemon>();
@@ -179,7 +172,7 @@ public class OrdenacaoExterna {
                             tmp1.read(ba);
 
                             Pokemon registro = new Pokemon();
-                            registro.toByteArray()(idRegistro, lapis, len, ba);
+                            registro.toByteArray();
 
                             registrosTmp1.add(registro);
 
@@ -198,10 +191,10 @@ public class OrdenacaoExterna {
                             ba = new byte[len];
                             tmp2.read(ba);
 
-                            Pokemon registro = new Pokemon();
-                            registro.toByteArray()(idRegistro, lapis, len, ba);
+                            Pokemon pokemon = new Pokemon();
+                            pokemon.toByteArray();
 
-                            registrosTmp2.add(registro);
+                            registrosTmp2.add(pokemon);
 
                             ponteiroBase = tmp2.getFilePointer();
                         }
@@ -232,16 +225,15 @@ public class OrdenacaoExterna {
 
                             RandomAccessFile numeroArquivoEscrita;
                             numeroArquivoEscrita = (rodadaArquivo % 2 == 0) ? tmp3 : tmp4;
-                            //CRUD c= new CRUD(enderecoDB);
+                            // CRUD c= new CRUD(enderecoDB);
 
-                    for (Pokemon registro : blocoOrdenavelTmp) {
-                       // numeroArquivoEscrita.seek(numeroArquivoEscrita.length());
-                        //numeroArquivoEscrita.writeInt(registro.getId());
-                        //numeroArquivoEscrita.writeBoolean(registro.getLapide());
-                        //numeroArquivoEscrita.writeInt(c.getTamanho(registro.getId()));
-                        //numeroArquivoEscrita.write(registro.toByteArray());
-                    }
-
+                            for (Pokemon registro : blocoOrdenavelTmp) {
+                                // numeroArquivoEscrita.seek(numeroArquivoEscrita.length());
+                                // numeroArquivoEscrita.writeInt(registro.getIndex());
+                                // numeroArquivoEscrita.writeBoolean(registro.getLapide());
+                                // numeroArquivoEscrita.writeInt(c.getTamanho(registro.getIndex()));
+                                // numeroArquivoEscrita.write(registro.toByteArray());
+                            }
 
                             if (blocoOrdenavelTmp.size() >= qtdRegistros) {
                                 arquivoOrdenado = true;
@@ -270,7 +262,7 @@ public class OrdenacaoExterna {
                             tmp3.read(ba);
 
                             Pokemon registro = new Pokemon();
-                            registro.toByteArray()(idRegistro, lapis, len, ba);
+                            registro.toByteArray();
 
                             registrosTmp3.add(registro);
 
@@ -290,7 +282,7 @@ public class OrdenacaoExterna {
                             tmp4.read(ba);
 
                             Pokemon registro = new Pokemon();
-                            registro.toByteArray()(idRegistro, lapis, len, ba);
+                            registro.toByteArray();
 
                             registrosTmp4.add(registro);
 
@@ -325,11 +317,11 @@ public class OrdenacaoExterna {
                             numeroArquivoEscrita = (rodadaArquivo % 2 == 0) ? tmp1 : tmp2;
 
                             for (Pokemon registro : blocoOrdenavelTmp) {
-                                //numeroArquivoEscrita.seek(numeroArquivoEscrita.length());
-                                //numeroArquivoEscrita.writeInt(registro.getId());
-                                //numeroArquivoEscrita.writeBoolean(registro.getLapide());
-                                //numeroArquivoEscrita.writeInt(registro.getTamanho());
-                                //numeroArquivoEscrita.write(registro.getAnime().toByteArray());
+                                // numeroArquivoEscrita.seek(numeroArquivoEscrita.length());
+                                // numeroArquivoEscrita.writeInt(registro.getIndex());
+                                // numeroArquivoEscrita.writeBoolean(registro.getLapide());
+                                // numeroArquivoEscrita.writeInt(registro.getTamanho());
+                                // numeroArquivoEscrita.write(registro.getAnime().toByteArray());
                             }
 
                             if (blocoOrdenavelTmp.size() >= qtdRegistros) {
@@ -364,19 +356,16 @@ public class OrdenacaoExterna {
         }
     }
 
-    
-           
-
     public void gerarArquivoOrdenado(ArrayList<Pokemon> listaOrdenada) throws Exception {
         try {
             RandomAccessFile arqFinal = new RandomAccessFile("ordenacao/intercalacao_comum.db", "rw");
 
             for (Pokemon registro : listaOrdenada) {
-                //arqFinal.seek(arqFinal.length());
-                //arqFinal.writeInt(registro.getId());
-                //arqFinal.writeBoolean(registro.getLapide());
-                //arqFinal.writeInt(registro.getTamanho());
-                //arqFinal.write(registro.getAnime().toByteArray());
+                // arqFinal.seek(arqFinal.length());
+                // arqFinal.writeInt(registro.getIndex());
+                // arqFinal.writeBoolean(registro.getLapide());
+                // arqFinal.writeInt(registro.getTamanho());
+                // arqFinal.write(registro.getAnime().toByteArray());
             }
 
             arqFinal.close();
@@ -410,13 +399,13 @@ public class OrdenacaoExterna {
             arq.read(ba);
 
             Pokemon registro = new Pokemon();
-            registro.toByteArray()(idTeste, lapis, len, ba);
+            registro.toByteArray();
 
             ponteiroBase = arq.getFilePointer();
 
             // Escrever no arquivo de impressão
-            //writer.write(registro.toString2(ba));
-           // writer.newLine();
+            // writer.write(registro.toString2(ba));
+            // writer.newLine();
         }
 
         writer.close();
