@@ -80,11 +80,13 @@ public class CRUD {
       file.seek(0);
       file.readInt(); // Lê o index do registro x
       try {
+         System.out.println(file.length());
          while (file.getFilePointer() < file.length()) {
             pos = file.getFilePointer();
             bytes = file.readInt();
             isAlive = file.readBoolean();
-            if (file.readInt() == pokemonIndex && isAlive) {
+            id = file.readInt();
+            if (id == pokemonIndex && isAlive) {
                try {
                   pokemon = binToPokemon(file, pos);
                   break;
@@ -102,33 +104,33 @@ public class CRUD {
       return pokemon;
    }
 
-   public Pokemon Read(int pokemonIndex) throws IOException {
+   public Pokemon Read(int entradaID) throws IOException {
       long pos;
       int qntBytesInic, id;
-      Pokemon pokemon = null;
+      Pokemon pokemonLido = null;
       boolean lap;
 
       file.seek(0);
-      file.readInt();// pula o ID do registro, pois o mesmo ID será lido mais para frente
+      file.seek(0);
+      int indexID = file.readInt();// pula o ID do registro, pois o mesmo ID será lido mais para frente
       try {
          while (file.getFilePointer() < file.length()) {
-            pos = file.getFilePointer(); // Pega a posição do ponteiro no momento atual(está apontando para a quantidade
-                                         // de bytes no registo).
+            pos = file.getFilePointer();
             qntBytesInic = file.readInt(); // Pega o tamanho do registo que será selecionado
-            lap = file.readBoolean(); // Armazena o valor da lápide do registro Pokemon específico
-            id = file.readInt(); // Armazena o ID do registro Pokemon específico
-            if (id == pokemonIndex) { // Verifica se o id é o mesmo que o selecionado
+            lap = file.readBoolean(); // Armazena o valor da lápide do registro pokemon específico
+            id = file.readInt(); // Armazena o ID do registro pokemon específico
+            if (id == entradaID) { // Verifica se o id é o mesmo que o selecionado
                if (lap) { // Verifica se a lápide é válida, ou seja, se o registro foi apagado ou não
                   try {
-                     pokemon = binToPokemon(file, pos); // Gera uma instância de Game e popula com as informações do
-                                                        // banco
-                     // de dados
+                     pokemonLido = binToPokemon(file, pos); // Gera uma instância de pokemon e popula com as informações
+                                                            // do
+                     // banco de dados
                      break;
                   } catch (Exception e) {
                      e.printStackTrace();
                   }
                } else {
-                  return pokemon;
+                  file.skipBytes(qntBytesInic - 5); // Pula para o próximo registro
                }
             } else {
                file.skipBytes(qntBytesInic - 5); // Pula para o próximo registro
@@ -136,10 +138,10 @@ public class CRUD {
          }
       } catch (IOException e) {
          e.printStackTrace();
-         pokemon = null;
+         pokemonLido = null;
       }
 
-      return pokemon;
+      return pokemonLido;
    }
 
    public Pokemon delete(int pokemonID) throws IOException {
@@ -211,17 +213,19 @@ public class CRUD {
       file.readInt(); // pula tam. da hidden ability
       pokemon.setHiddenAbility(file.readUTF());
       pokemon.setReleaseDate(file.readLong());
-
-      for (int i = 0; i < file.readInt(); i++) {
+      String[] types = new String[file.readInt()];
+      for (int i = 0; i < types.length; i++) {
          file.readInt(); // pula tam. de cada tipo
-         typeArrList.add(file.readUTF());
+         types[i] = file.readUTF();
+         typeArrList.add(types[i]);
       }
       pokemon.setTypes(typeArrList);
-      for (int i = 0; i < file.readInt(); i++) {
+      String[] abilities = new String[file.readInt()];
+      for (int i = 0; i < abilities.length; i++) {
          file.readInt(); // pula tam. de cada habilidade
          abilitiesArrList.add(file.readUTF());
       }
-      pokemon.setTypes(abilitiesArrList);
+      pokemon.setAbilities(abilitiesArrList);
 
       return pokemon;
    }

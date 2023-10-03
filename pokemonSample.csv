@@ -1,4 +1,4 @@
-index,pokedex_number,name,generation,specie,ability_hidden,release_date,types,abilities
+index,pokedex_number,name,generation,species,ability_hidden,release_date,types,abilities
 0,1,Bulbasaur,Gen. 1,Seed Pokémon,Chlorophyll,1996-02-27,"Grass, Poison","Overgrow, "
 1,2,Ivysaur,Gen. 1,Seed Pokémon,Chlorophyll,1996-02-27,"Grass, Poison","Overgrow, "
 2,3,Venusaur,Gen. 1,Seed Pokémon,Chlorophyll,1996-02-27,"Grass, Poison","Overgrow, "
@@ -12,3 +12,4 @@ index,pokedex_number,name,generation,specie,ability_hidden,release_date,types,ab
 10,8,Wartortle,Gen. 1,Turtle Pokémon,Rain Dish,1996-02-27,"Water, ","Torrent, "
 11,9,Blastoise,Gen. 1,Shellfish Pokémon,Rain Dish,1996-02-27,"Water, ","Torrent, "
 12,9,Mega Blastoise,Gen. 1,Shellfish Pokémon,,1996-02-27,"Water, ","Mega Launcher, "
+13,10,Caterpie,Gen. 1,Worm Pokémon,Run Away,1996-02-27,"Bug, ","Shield Dust, "

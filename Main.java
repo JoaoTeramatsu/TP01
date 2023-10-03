@@ -168,32 +168,26 @@ public class Main {
                try {
                   System.out.println("Digite o ID: ");
                   int readID = fetch.nextInt();
-                  crud.read(readID).getIndex(); // Teste para ver se pokemon existe (teste de pointer)
-                  if (crud.read(readID).lapide) {
-                     System.out.println("\nArquivo encontrado!\n");
+                  Pokemon pokemon = crud.Read(readID);
+                  if (pokemon.lapide) {
                      System.out.print(
-                           "ID: " + crud.read(readID).getIndex() + ", Pokedex ID: " + crud.read(readID).getPokedexNum()
-                                 + ", Nome do Pokemon: " + crud.read(readID).getName()
-                                 + ", Geração: " + crud.read(readID).getGeneration()
-                                 + ", Especie: " + crud.read(readID).getSpecie()
-                                 + ", Hidden Hability: " + crud.read(readID).getHiddenAbility() + ", ");
+                           "ID: " + pokemon.getIndex() + ", Pokedex ID: " + pokemon.getPokedexNum()
+                                 + ", Nome do Pokemon: " + pokemon.getName()
+                                 + ", Geração: " + pokemon.getGeneration()
+                                 + ", Especie: " + pokemon.getSpecie()
+                                 + ", Hidden Hability: " + pokemon.getHiddenAbility() + ", ");
 
-                     System.out.print(" Tipos: ");
-                     for (int i = 0; i < crud.read(readID).getTypes().size(); i++) {
-                        System.out.print(crud.read(readID).getTypes().get(i));
-                        if (i != crud.read(readID).getTypes().size() - 1) {
-                           System.out.print(", ");
-                        }
+                     System.out.print("Tipos: ");
+                     for (int i = 0; i < pokemon.getTypes().size(); i++) {
+                        System.out.print(pokemon.getTypes().get(i) + " ");
                      }
                      System.out.print(" Habilidades: ");
-                     for (int i = 0; i < crud.read(readID).getAbilities().size(); i++) {
-                        System.out.print(crud.read(readID).getAbilities().get(i));
-                        if (i != crud.read(readID).getAbilities().size() - 1) {
-                           System.out.print(", ");
-                        }
+                     for (int i = 0; i < pokemon.getAbilities().size(); i++) {
+                        System.out.print(pokemon.getAbilities().get(i) + " ");
                      }
                      System.out.println("");
-                  } else
+                  } // Teste para ver se pokemon existe (teste de pointer)
+                  else
                      System.out.println("Arquivo não Encontrado!");
                   ;
                } catch (Exception e) {
