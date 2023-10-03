@@ -230,10 +230,10 @@ public class Main {
             // Delete
 
             case 4:
-               System.out.print("Digite o ID do game que deseja deletar no arquivo: ");
+               System.out.print("Digite o ID do Pokemon que deseja deletar no arquivo: ");
                int deleteID = fetch.nextInt();
                try {
-                  Pokemon pokemonDeleted = crud.Read(deleteID); // Teste para ver se existe game
+                  Pokemon pokemonDeleted = crud.Read(deleteID); // Teste para ver se existe Pokemon
                   System.out.print(
                         "ID: " + pokemonDeleted.getIndex() + ", Pokedex ID: " + pokemonDeleted.getPokedexNum()
                               + ", Nome do pokemon deletado: " + pokemonDeleted.getName()
@@ -250,7 +250,7 @@ public class Main {
                      System.out.print(pokemonDeleted.getAbilities().get(i) + " ");
                   }
                   System.out.println("");
-                  crud.delete(deleteID); // Deleta o game
+                  crud.delete(deleteID); // Deleta o Pokemon
                   System.out.println("\nArquivo deletado com sucesso!");
                } catch (Exception e) {
                   System.out.println("\nArquivo não encontrado!");

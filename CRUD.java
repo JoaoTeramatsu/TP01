@@ -65,8 +65,8 @@ public class CRUD {
                                            // quantidade
             // de bytes no registo).
             qntBytesInic = file.readInt(); // Pega o tamanho do registo que será selecionado
-            lap = file.readBoolean(); // Armazena o valor da lápide do registro Game específico
-            id = file.readInt(); // Armazena o ID do registro Game específico
+            lap = file.readBoolean(); // Armazena o valor da lápide do registro Pokemon específico
+            id = file.readInt(); // Armazena o ID do registro Pokemon específico
             if (id == entryIndex) { // Verifica se o id é o mesmo que o selecionado
                return false;
             } else {
@@ -141,7 +141,7 @@ public class CRUD {
             pos = file.getFilePointer(); // Pega a posição do ponteiro no momento atual(está apontando para a quantidade
                                          // de bytes no registo).
             bytes = file.readInt(); // Pega o tamanho do registo que será selecionado
-            lap = file.readBoolean(); // Armazena o valor da lápide do registro Game específico
+            lap = file.readBoolean(); // Armazena o valor da lápide do registro Pokemon específico
             id = file.readInt();
             if (id == pokemonID) { // Verifica se o id é o mesmo que o selecionado
                if (lap) { // Verifica se a lápide é válida, ou seja, se o registro foi apagado ou não

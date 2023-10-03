@@ -15,22 +15,22 @@ public class ArvoreB {
     public ArvoreB(int ordem) {
         this.ordem = ordem;
         this.raiz = null;
-        try{
-        arq = new RandomAccessFile("arqArvore", "rw");
-        arq2= new RandomAccessFile("arqHash", "rw");
-        arq.seek(0);
-        arq2.seek(0);
-        }catch(Exception e){}
-        quant=0;
+        try {
+            arq = new RandomAccessFile("arqArvore", "rw");
+            arq2 = new RandomAccessFile("arqHash", "rw");
+            arq.seek(0);
+            arq2.seek(0);
+        } catch (Exception e) {
+        }
+        quant = 0;
     }
-
 
     // Método de inserção
 
     public void insere(int chave, long pos) {
         // Atualizar arquivo
         quant++;
-        try{
+        try {
             arq.seek(0);
             arq2.seek(0);
             arq.writeInt(quant);
@@ -41,7 +41,8 @@ public class ArvoreB {
             arq2.writeInt(chave);
             arq.writeLong(pos);
             arq2.writeLong(pos);
-        } catch(Exception e){}
+        } catch (Exception e) {
+        }
         // Checa se árvore está vazia
         if (raiz == null) {
             // Cria nova a raiz e prepara a árvore
@@ -78,7 +79,7 @@ public class ArvoreB {
         // Preenche novo nó
         for (int j = 0; j < ordem - 1; j++) {
             novoNoFilho.setChave(j, noFilho.getChave(j + ordem));
-            novoNoFilho.setPos(j, noFilho.getPos(j+ordem));
+            novoNoFilho.setPos(j, noFilho.getPos(j + ordem));
         }
         // Checa se nó filho não é folha
         if (!noFilho.isFolha()) {
@@ -99,13 +100,13 @@ public class ArvoreB {
 
         for (int j = noPai.getNumChaves() - 1; j >= index; j--) {
             noPai.setChave(j + 1, noPai.getChave(j));
-            noPai.setPos(j+1, noPai.getPos(j));
+            noPai.setPos(j + 1, noPai.getPos(j));
         }
 
         // Termina balanceamento da árvore
 
         noPai.setChave(index, noFilho.getChave(ordem - 1));
-        noPai.setPos(index, noFilho.getPos(ordem-1));
+        noPai.setPos(index, noFilho.getPos(ordem - 1));
         noPai.incrementaChaves();
     }
 
@@ -123,7 +124,7 @@ public class ArvoreB {
             }
             // Insere novos valores
             no.setChave(i + 1, chave);
-            no.setPos(i+1, pos);
+            no.setPos(i + 1, pos);
             no.incrementaChaves();
         } else {
             // Vai para posição onde o ID deve ser inserido
@@ -145,10 +146,12 @@ public class ArvoreB {
             insereNoNaoCheio(no.getFilho(i), chave, pos);
         }
     }
+
     // Método de busca que retorna o nó
     public NoArvore busca(int chave) {
         return busca(raiz, chave);
     }
+
     // Chama o método com a raiz
     private NoArvore busca(NoArvore no, int chave) {
         int i = 0;
@@ -168,10 +171,11 @@ public class ArvoreB {
         // Busca no próximo nó caso o atual não seja folha
         return busca(no.getFilho(i), chave);
     }
-    // Método de busca que retorna a posição do Game no arquivo binário (retorna o ponteiro)
+
     public long buscaPos(int chave) {
         return buscaPos(raiz, chave);
     }
+
     // Chama método passando a raiz
     private long buscaPos(NoArvore no, int chave) {
         int i = 0;
@@ -190,10 +194,12 @@ public class ArvoreB {
         // Refaz a busca no próximo nó caso esse não seja folha
         return buscaPos(no.getFilho(i), chave);
     }
+
     // Método de busca que retorna o índice do ID desejado dentro do nó
     public int buscaI(int chave) {
         return buscaI(raiz, chave);
     }
+
     // Chama método passando a raiz
     private int buscaI(NoArvore no, int chave) {
         int i = 0;
@@ -213,12 +219,13 @@ public class ArvoreB {
         // Continua busca no próximo nó
         return buscaI(no.getFilho(i), chave);
     }
+
     // Método de remover a partir do ID
     public void remove(int chave) {
         if (raiz == null) {
             return;
         }
-    
+
         remove(raiz, chave);
         // Se árvore estiver vazia
         if (raiz.getNumChaves() == 0) {
@@ -229,6 +236,7 @@ public class ArvoreB {
             }
         }
     }
+
     // Chama método passando raiz
     private void remove(NoArvore no, int chave) {
         int i = 0;
@@ -249,11 +257,11 @@ public class ArvoreB {
             }
             // Checa tamanho do nó
             boolean flag = (i == no.getNumChaves());
-    
+
             if (no.getFilho(i).getNumChaves() < ordem) {
                 preenche(no, i);
             }
-            
+
             if (flag && i > no.getNumChaves()) {
                 remove(no.getFilho(i - 1), chave);
             } else {
@@ -261,16 +269,18 @@ public class ArvoreB {
             }
         }
     }
+
     // Método para remoção de folha
     private void removeChaveFolha(NoArvore no, int index) {
         // Remove a chave desejada da folha
         for (int i = index + 1; i < no.getNumChaves(); ++i) {
-            no.setPos(i-1, no.getPos(i));
+            no.setPos(i - 1, no.getPos(i));
             no.setChave(i - 1, no.getChave(i));
         }
         // Decrementa chave do nó
         no.decrementaChaves();
     }
+
     // Método para remoção de nó que não é folha
     private void removeChaveNaoFolha(NoArvore no, int index) {
         int chave = no.getChave(index);
@@ -291,6 +301,7 @@ public class ArvoreB {
             remove(no.getFilho(index), chave);
         }
     }
+
     // Método para pegar predecessor
     private int getPredecessor(NoArvore no, int index) {
         // Vai para o nó filho
@@ -301,6 +312,7 @@ public class ArvoreB {
         // Retorna quantidade de chaves do nó filho
         return cur.getChave(cur.getNumChaves() - 1);
     }
+
     // Método para pegar sucessor
     private int getSucessor(NoArvore no, int index) {
         // Vai para nó filho
@@ -311,6 +323,7 @@ public class ArvoreB {
         // Retorna primeiro elemento do filho
         return cur.getChave(0);
     }
+
     // Método para preeencher nó
     private void preenche(NoArvore no, int index) {
         // Preenche nó
@@ -327,6 +340,7 @@ public class ArvoreB {
             }
         }
     }
+
     // Método para mover a chave para a direita
     private void moveChaveParaDireita(NoArvore no, int index) {
         // Remaneja nó para esquerda
@@ -336,24 +350,25 @@ public class ArvoreB {
         for (int i = filho.getNumChaves() - 1; i >= 0; --i) {
             filho.setChave(i + 1, filho.getChave(i));
         }
-    
+
         if (!filho.isFolha()) {
             for (int i = filho.getNumChaves(); i >= 0; --i) {
                 filho.setFilho(i + 1, filho.getFilho(i));
             }
         }
-    
+
         filho.setChave(0, no.getChave(index - 1));
-    
+
         if (!no.isFolha()) {
             filho.setFilho(0, irmao.getFilho(irmao.getNumChaves()));
         }
-    
+
         no.setChave(index - 1, irmao.getChave(irmao.getNumChaves() - 1));
         // Muda o balanceamento da árvore
         filho.incrementaChaves();
         irmao.decrementaChaves();
     }
+
     // Método para mover a chave para a esquerda
     private void moveChaveParaEsquerda(NoArvore no, int index) {
         // Remaneja nó para direita
@@ -361,17 +376,17 @@ public class ArvoreB {
         NoArvore irmao = no.getFilho(index + 1);
         // Prepara inserção do nó
         filho.setChave(filho.getNumChaves(), no.getChave(index));
-    
+
         if (!filho.isFolha()) {
             filho.setFilho(filho.getNumChaves() + 1, irmao.getFilho(0));
         }
-    
+
         no.setChave(index, irmao.getChave(0));
-    
+
         for (int i = 1; i < irmao.getNumChaves(); ++i) {
             irmao.setChave(i - 1, irmao.getChave(i));
         }
-    
+
         if (!irmao.isFolha()) {
             for (int i = 1; i <= irmao.getNumChaves(); ++i) {
                 irmao.setFilho(i - 1, irmao.getFilho(i));
@@ -381,18 +396,19 @@ public class ArvoreB {
         filho.incrementaChaves();
         irmao.decrementaChaves();
     }
+
     // Método para utilização do merge
     private void merge(NoArvore no, int index) {
         // Preparação utilizando atributos
         NoArvore filho = no.getFilho(index);
         NoArvore irmao = no.getFilho(index + 1);
-    
+
         filho.setChave(ordem - 1, no.getChave(index));
-        filho.setPos(ordem-1, no.getPos(index));
+        filho.setPos(ordem - 1, no.getPos(index));
         // Reorganizando nó
         for (int i = 1; i < irmao.getNumChaves(); ++i) {
             filho.setChave(i + ordem - 1, irmao.getChave(i));
-            filho.setPos(i+ ordem -1, irmao.getPos(i));
+            filho.setPos(i + ordem - 1, irmao.getPos(i));
         }
         // Checa se não é folha
         if (!filho.isFolha()) {
@@ -400,12 +416,12 @@ public class ArvoreB {
                 filho.setFilho(i + ordem - 1, irmao.getFilho(i));
             }
         }
-    
+
         for (int i = index + 1; i < no.getNumChaves(); ++i) {
             no.setChave(i - 1, no.getChave(i));
-            no.setPos(i-1,no.getPos(i));
+            no.setPos(i - 1, no.getPos(i));
         }
-    
+
         for (int i = index + 2; i <= no.getNumChaves(); ++i) {
             no.setFilho(i - 1, no.getFilho(i));
         }
@@ -413,4 +429,4 @@ public class ArvoreB {
         filho.setNumChaves(filho.getNumChaves() + irmao.getNumChaves() + 1);
         no.decrementaChaves();
     }
-}    
+}
