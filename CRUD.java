@@ -70,7 +70,7 @@ public class CRUD {
             if (id == entryIndex) { // Verifica se o id é o mesmo que o selecionado
                return false;
             } else {
-               file.skipBytes(qntBytesInic - 5); // Pula para o próximo registro
+               file.skipBytes(qntBytesInic - 5); // Pula para o próximo registro ( int + boolean)
             }
          }
       } catch (IOException e) {
@@ -114,10 +114,10 @@ public class CRUD {
                      e.printStackTrace();
                   }
                } else {
-                  file.skipBytes(qntBytesInic - 5); // Pula para o próximo registro
+                  file.skipBytes(qntBytesInic - 5); // Pula para o próximo registro ( int + boolean)
                }
             } else {
-               file.skipBytes(qntBytesInic - 5); // Pula para o próximo registro
+               file.skipBytes(qntBytesInic - 5); // Pula para o próximo registro ( int + boolean)
             }
          }
       } catch (IOException e) {
@@ -154,10 +154,10 @@ public class CRUD {
                      e.printStackTrace();
                   }
                } else {
-                  file.skipBytes(bytes - 5); // Pula para o próximo registro
+                  file.skipBytes(bytes - 5); // Pula para o próximo registro ( int + boolean)
                }
             } else {
-               file.skipBytes(bytes - 5); // Pula para o próximo registro
+               file.skipBytes(bytes - 5); // Pula para o próximo registro ( int + boolean)
             }
          }
       } catch (IOException e) {
@@ -233,10 +233,10 @@ public class CRUD {
                if (lap) { // Verifica se a lápide é válida, ou seja, se o registro foi apagado ou não
                   return false;
                } else {
-                  file.skipBytes(qntBytesInic - 5); // Pula para o próximo registro
+                  file.skipBytes(qntBytesInic - 5); // Pula para o próximo registro ( int + boolean)
                }
             } else {
-               file.skipBytes(qntBytesInic - 5); // Pula para o próximo registro
+               file.skipBytes(qntBytesInic - 5); // Pula para o próximo registro ( int + boolean)
             }
          }
       } catch (IOException e) {
