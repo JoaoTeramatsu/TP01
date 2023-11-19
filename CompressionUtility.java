@@ -151,9 +151,15 @@ public class CompressionUtility {
 
     private static void saveCompressedFile(String fileName, String compressedData, HuffmanNode root)
             throws IOException {
-        // Save the compressed data and Huffman Tree to a file
-        // You can use ObjectOutputStream or any other method to serialize the Huffman
-        // Tree
+        try (FileOutputStream fos = new FileOutputStream(fileName);
+                ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+
+            // Write the compressed data as a string
+            oos.writeObject(compressedData);
+
+            // Serialize the Huffman Tree
+            oos.writeObject(root);
+        }
     }
 
     private static Pair<String, HuffmanNode> readCompressedFile(String fileName)

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-   public static void main(String args[]) throws IOException {
+   public static void main(String args[]) throws IOException, ClassNotFoundException {
       Scanner fetch = new Scanner(System.in);
       ArvoreB arv = new ArvoreB(8);
       HashExtensivel hash = new HashExtensivel(1);
@@ -35,13 +35,15 @@ public class Main {
          }
       }
       int choice = 0;
-      while (choice != 5) {
+      while (choice != 7) {
          System.out.println("Escolha uma operação: ");
          System.out.println("1- Create");
          System.out.println("2- Read");
          System.out.println("3- Update");
          System.out.println("4- Delete");
-         System.out.println("5- Sair");
+         System.out.println("5- Compress");
+         System.out.println("6- Decompress");
+         System.out.println("7- Sair");
          choice = fetch.nextInt();
 
          switch (choice) {
@@ -257,11 +259,19 @@ public class Main {
                }
                // Enviar para Delete no CRUD
                break;
-
-            // Sair
-
             case 5:
+               CompressionUtility.compressFile("pokemonDB", "Huffman");
+               // CompressionUtility.compressFile("pokemonDB", "LZW");
+               break;
 
+            case 6:
+               System.out.println("Digite a versão de compressão que deseja descompactar:");
+               int version = fetch.nextInt();
+               CompressionUtility.decompressFile("pokemonDB", "Huffman", version);
+               CompressionUtility.decompressFile("pokemonDB", "LZW", version);
+               break;
+            case 7:
+               // sair
                break;
          }
 
